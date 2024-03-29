@@ -1,12 +1,24 @@
-steps:
-  - uses: actions/checkout@v3
+name: test
+on:
+  push:
+    branches:
+      # Change this if your primary branch is not main
+      - master
+      - dev
 
-  - uses: codfish/semantic-release-action@v3
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  - name: Install dependencies
-    run: npm install
-  - name: Build
-    run: npm run build
-  - name: Run semantic-release
-    run: npx semantic-release
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: codfish/semantic-release-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Run semantic-release
+        run: npx semantic-release
+    
